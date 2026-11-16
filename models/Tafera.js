@@ -1,5 +1,5 @@
 const STATUS_PENDENTE = "pendente";
-const STATUS_CONCLUIDO = "concluido";
+const STATUS_CONCLUIDO = "concluído";
 
 class TarefaModel {
   static #previousId = 0;
@@ -44,7 +44,7 @@ class TarefaModel {
       };
 
     const novaTarefa = {
-      id: ++TarefaModel.#nextId,
+      id: TarefaModel.#nextId,
       titulo,
       descricao,
       disciplina,
@@ -155,6 +155,10 @@ class TarefaModel {
       (tarefa) => tarefa.status === targetStatus,
     );
 
+    if (lista.length === 0) return { erro: "Nenhum resultado encontrado" };
+
     return { data: lista };
   }
 }
+
+export default TarefaModel;

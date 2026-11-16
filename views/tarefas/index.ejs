@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo MVC</title>
+</head>
+<body>
+    <h1>Tarefódromo</h1>
+
+    <% if (erro) { %>
+        <p><%= erro %></p>
+    <% } %>
+
+    <form action="/tarefas" method="post">
+        <label for="nome">Título:</label>
+        <input type="text" id="titulo" name="titulo" minlength="3" maxlength="100" required>
+
+        <label for="nome">Descrição:</label>
+        <input type="text" id="descricao" name="descricao" maxlength="500">
+        
+        <label for="nome">Disciplina:</label>
+        <input type="text" id="disciplina" name="disciplina" minlength="2" maxlength="80">
+
+        <button type="submit">Inserir</button>
+    </form>
+
+    <h2>Tarefas cadastradas</h2>
+
+    <% if (tarefas.length === 0) { %>
+        <p>Nenhuma tarefa cadastrado</p>
+    <% } else { %>
+        <% tarefas.forEach(tarefa => { %>
+            <p style="display:grid;gap:8px;grid-template-columns:repeat(5,1fr);">
+                <span style="display:subgrid;gap:8px;">#<%= tarefa.id %></span>
+                <span style="display:subgrid;gap:8px;"><%= tarefa.titulo %></span>
+                <span style="display:subgrid;gap:8px;"><%= tarefa.descricao %></span>
+                <span style="display:subgrid;gap:8px;text-transform:uppercase;"><%= tarefa.status %></span>
+            </p>
+        <% }); %>
+    <% } %>
+</body>
+</html>
