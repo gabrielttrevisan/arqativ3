@@ -63,4 +63,10 @@ class TarefaModel {
       data: structuredClone(this.#tarefas),
     };
   }
+
+  porId(id) {
+    const tarefa = this.#tarefas.find((tarefa) => tarefa.id === id);
+
+    if (!tarefa) return { erro: `Tarefa com ID #${id} não encontrada` };
+  }
 }
