@@ -64,11 +64,59 @@ class TarefaModel {
     };
   }
 
-  porId(id) {
+  #porId(id) {
     const tarefa = this.#tarefas.find((tarefa) => tarefa.id === id);
+
+    if (!tarefa) return null;
+
+    return tarefa;
+  }
+
+  porId(id) {
+    const tarefa = this.#porId(id);
 
     if (!tarefa) return { erro: `Tarefa com ID #${id} não encontrada` };
 
-    return { data: tarefa };
+    return { data: structuredClone(tarefa) };
+  }
+
+  editar(id, payload) {
+    const tarefa = this.#porId(id);
+
+    if (!tarefa) return { error: `Tarefa com ID #${id} não encontrada` };
+
+    if (!payload || typeof payload !== "object")
+      return { erro: "Tarefa deve ser um objeto não nulo" };
+
+    const titulo = payload.titulo?.trim();
+
+    if (
+      titulo &&
+      (typeof titulo !== "string" || titulo.length < 2 || titulo.length > 100)
+    )
+      return { erro: "O título da tarefa deve ser uma string não vazia" };
+
+    const descricao = payload.descricao?.trim() || null;
+
+    if (descricao && (typeof descricao !== "string" || descricao.length > 500))
+      return {
+        erro: "A descrição da tarefa deve ser uma string não vazia e com no máximo 500 characteres",
+      };
+
+    const disciplina = payload.disciplina?.trim() || null;
+
+    if (
+      disciplina &&
+      (typeof disciplina !== "string" ||
+        disciplina.length < 2 ||
+        disciplina.length > 80)
+    )
+      return {
+        erro: "A disciplina da tarefa deve ser uma string com no mínimo 2 e no máximo 500 characteres",
+      };
+
+    tarefa.disciplina = disciplina || tarefa.disciplina;
+    tarefa.descricao = descricao || tarefa.descricao;
+    tarefa.titulo = titulo || tarefa.titulo;
   }
 }
