@@ -146,4 +146,15 @@ class TarefaModel {
 
     return { data: removido };
   }
+
+  filtrar(filtrarPorConcluidas = false) {
+    const targetStatus = filtrarPorConcluidas
+      ? STATUS_CONCLUIDO
+      : STATUS_PENDENTE;
+    const lista = this.#tarefas.filter(
+      (tarefa) => tarefa.status === targetStatus,
+    );
+
+    return { data: lista };
+  }
 }
