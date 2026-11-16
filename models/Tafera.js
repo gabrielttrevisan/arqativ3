@@ -125,10 +125,25 @@ class TarefaModel {
   concluir(id) {
     const tarefa = this.#porId(id);
 
-    if (!tarefa) return { error: `Tarefa com ID #${id} não encontrada` };
+    if (!tarefa) return { erro: `Tarefa com ID #${id} não encontrada` };
 
     tarefa.status = STATUS_CONCLUIDO;
 
     return { data: tarefa };
+  }
+
+  excluir(id) {
+    const indexTarefa = this.#tarefas.findIndex((tarefa) => tarefa.id === id);
+
+    if (indexTarefa === -1)
+      return { erro: `Tarefa com ID #${id} não encontrada` };
+
+    if (indexTarefa === 0) return { data: this.#tarefas.shift() };
+    else if (indexTarefa === this.#tarefas.length - 1)
+      return { data: this.#tarefas.pop() };
+
+    const [removido] = this.#tarefas.splice(indexTarefa, 1);
+
+    return { data: removido };
   }
 }
