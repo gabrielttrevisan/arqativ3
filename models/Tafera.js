@@ -68,5 +68,7 @@ class TarefaModel {
     const tarefa = this.#tarefas.find((tarefa) => tarefa.id === id);
 
     if (!tarefa) return { erro: `Tarefa com ID #${id} não encontrada` };
+
+    return { data: tarefa };
   }
 }
