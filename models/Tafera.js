@@ -118,5 +118,17 @@ class TarefaModel {
     tarefa.disciplina = disciplina || tarefa.disciplina;
     tarefa.descricao = descricao || tarefa.descricao;
     tarefa.titulo = titulo || tarefa.titulo;
+
+    return { data: tarefa };
+  }
+
+  concluir(id) {
+    const tarefa = this.#porId(id);
+
+    if (!tarefa) return { error: `Tarefa com ID #${id} não encontrada` };
+
+    tarefa.status = STATUS_CONCLUIDO;
+
+    return { data: tarefa };
   }
 }
