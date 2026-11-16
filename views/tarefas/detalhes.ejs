@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo MVC</title>
+</head>
+<body>
+    <h1>Tarefódromo</h1>
+
+    
+    <% if (erro) { %>
+        <p><%= erro %></p>
+    <% } else { %>    
+        <h2>Tarefa #<%= tarefa.id %></h2>
+
+        <label for="nome">Título:</label>
+        <input type="text"name="titulo" readonly value="<%= tarefa.titulo %>">
+
+        <label for="nome">Descrição:</label>
+        <input type="text" name="descricao" readonly value="<%= tarefa.descricao %>">
+        
+        <label for="nome">Disciplina:</label>
+        <input type="text"  name="disciplina" readonly value="<%= tarefa.disciplina %>">
+        
+        <label for="nome">Estado:</label>
+        <input type="text"  name="disciplina" readonly value="<%= tarefa.status %>">
+    <% } %>
+</body>
+</html>

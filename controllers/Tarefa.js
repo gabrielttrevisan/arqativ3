@@ -7,6 +7,7 @@ class TarefaController {
     this.cadastrar = this.cadastrar.bind(this);
     this.listar = this.listar.bind(this);
     this.filtrar = this.filtrar.bind(this);
+    this.detalhes = this.detalhes.bind(this);
   }
 
   cadastrar(req, res) {
@@ -43,6 +44,26 @@ class TarefaController {
     res.render("tarefas/filtrar", {
       tarefas: resposta.data ?? [],
       tituloEstado: filtrarPorConcluidas ? "Concluídas" : "Pendentes",
+    });
+  }
+
+  detalhes(req, res) {
+    const id = Number(req.params?.id);
+
+    if (!id || isNaN(id) || !isFinite(id)) {
+      const resposta = this.#model.listar();
+
+      return res.status(400).render("tarefas/index", {
+        tarefas: resposta.data ?? [],
+        erro: `Identificador da tarefa inválido`,
+      });
+    }
+
+    const resposta = this.#model.porId(id);
+
+    res.render("tarefas/detalhes", {
+      tarefa: resposta.data || {},
+      erro: resposta.erro,
     });
   }
 }

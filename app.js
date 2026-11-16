@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 
 app.get("/tarefas", tarefaController.listar);
 app.get("/tarefas/filtrar", tarefaController.filtrar);
+app.get("/tarefas/detalhes/:id", tarefaController.detalhes);
 app.post("/tarefas", tarefaController.cadastrar);
 
 app.listen(3000, () => {
