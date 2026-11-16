@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo MVC</title>
+</head>
+<body>
+    <h1>Tarefódromo</h1>
+
+    <h2>Tarefas <%= tituloEstado %></h2>
+
+    <% if (tarefas.length === 0) { %>
+        <p>Nenhuma tarefa cadastrado</p>
+    <% } else { %>
+        <% tarefas.forEach(tarefa => { %>
+            <p style="display:grid;gap:8px;grid-template-columns:repeat(5,1fr);">
+                <span style="display:subgrid;gap:8px;">#<%= tarefa.id %></span>
+                <span style="display:subgrid;gap:8px;"><%= tarefa.titulo %></span>
+                <span style="display:subgrid;gap:8px;"><%= tarefa.descricao %></span>
+                <span style="display:subgrid;gap:8px;text-transform:uppercase;">
+                    <% if (tarefa.status === "pendente") { %> Pendente
+                    <% } else { %> Concluído
+                    <% } %>
+                </span>
+            </p>
+        <% }); %>
+    <% } %>
+</body>
+</html>

@@ -1,5 +1,5 @@
 const STATUS_PENDENTE = "pendente";
-const STATUS_CONCLUIDO = "concluído";
+const STATUS_CONCLUIDO = "concluido";
 
 class TarefaModel {
   static #previousId = 0;

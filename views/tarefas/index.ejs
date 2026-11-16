@@ -27,6 +27,16 @@
 
     <h2>Tarefas cadastradas</h2>
 
+    <div style="display:flex;gap:8px;">
+        <strong>Filtrar por:</strong>
+        <a href="/tarefas/filtrar?filtrarPorConcluidas=1" target="_blank" rel="noreferrer noopener">
+            Concluídas
+        </a>
+        <a href="/tarefas/filtrar?filtrarPorConcluidas=0" target="_blank" rel="noreferrer noopener">
+            Pendentes
+        </a>
+    </div>
+
     <% if (tarefas.length === 0) { %>
         <p>Nenhuma tarefa cadastrado</p>
     <% } else { %>

@@ -6,6 +6,7 @@ class TarefaController {
 
     this.cadastrar = this.cadastrar.bind(this);
     this.listar = this.listar.bind(this);
+    this.filtrar = this.filtrar.bind(this);
   }
 
   cadastrar(req, res) {
@@ -29,6 +30,19 @@ class TarefaController {
     res.render("tarefas/index", {
       tarefas: resposta.data ?? [],
       erro: resposta.erro,
+    });
+  }
+
+  filtrar(req, res) {
+    const filtrarPorConcluidas = ["1", "true", 1, true].includes(
+      req.body?.filtrarPorConcluidas,
+    );
+
+    const resposta = this.#model.filtrar(filtrarPorConcluidas);
+
+    res.render("tarefas/filtrar", {
+      tarefas: resposta.data ?? [],
+      tituloEstado: filtrarPorConcluidas ? "Concluídas" : "Pendentes",
     });
   }
 }
