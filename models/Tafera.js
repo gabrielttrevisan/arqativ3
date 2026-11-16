@@ -10,7 +10,7 @@ class TarefaModel {
 
   #tarefas = [];
 
-  create(payload) {
+  cadastrar(payload) {
     if (!payload || typeof payload !== "object")
       return { erro: "Tarefa deve ser um objeto não nulo" };
 
@@ -55,6 +55,12 @@ class TarefaModel {
 
     return {
       data: novaTarefa,
+    };
+  }
+
+  listar() {
+    return {
+      data: structuredClone(this.#tarefas),
     };
   }
 }
