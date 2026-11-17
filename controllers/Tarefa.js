@@ -8,6 +8,7 @@ class TarefaController {
     this.listar = this.listar.bind(this);
     this.filtrar = this.filtrar.bind(this);
     this.detalhes = this.detalhes.bind(this);
+    this.concluir = this.concluir.bind(this);
   }
 
   cadastrar(req, res) {
@@ -36,7 +37,7 @@ class TarefaController {
 
   filtrar(req, res) {
     const filtrarPorConcluidas = ["1", "true", 1, true].includes(
-      req.body?.filtrarPorConcluidas,
+      req.query?.filtrarPorConcluidas,
     );
 
     const resposta = this.#model.filtrar(filtrarPorConcluidas);
@@ -51,11 +52,9 @@ class TarefaController {
     const id = Number(req.params?.id);
 
     if (!id || isNaN(id) || !isFinite(id)) {
-      const resposta = this.#model.listar();
-
-      return res.status(400).render("tarefas/index", {
-        tarefas: resposta.data ?? [],
-        erro: `Identificador da tarefa inválido`,
+      return res.render("tarefas/detalhes", {
+        tarefa: null,
+        erro: `Nenhum tarefa encontrada para o ID "${id}"`,
       });
     }
 
@@ -64,6 +63,27 @@ class TarefaController {
     res.render("tarefas/detalhes", {
       tarefa: resposta.data || {},
       erro: resposta.erro,
+    });
+  }
+
+  concluir(req, res) {
+    const id = Number(req.params?.id);
+
+    if (!id || isNaN(id) || !isFinite(id)) {
+      const respostaListar = this.#model.listar();
+
+      return res.status(400).render("tarefas/index", {
+        tarefas: respostaListar.data ?? [],
+        erro: `Erro: identificador inválido`,
+      });
+    }
+
+    const resposta = this.#model.concluir(id);
+    const respostaListar = this.#model.listar();
+
+    res.render("tarefas/index", {
+      tarefas: respostaListar.data || [],
+      erro: resposta.erro || `Sucesso! Tarefa #${id} concluida com sucesso`,
     });
   }
 }
