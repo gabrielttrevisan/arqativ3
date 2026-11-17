@@ -23,6 +23,8 @@ app.get("/tarefas/filtrar", tarefaController.filtrar);
 app.get("/tarefas/detalhes/:id", tarefaController.detalhes);
 app.get("/tarefas/concluir/:id", tarefaController.concluir);
 app.get("/tarefas/excluir/:id", tarefaController.excluir);
+app.get("/tarefas/editar/:id", tarefaController.editarView);
+app.post("/tarefas/editar", tarefaController.editarPost);
 app.post("/tarefas", tarefaController.cadastrar);
 
 app.listen(3000, () => {

@@ -60,7 +60,7 @@ class TarefaModel {
 
   listar() {
     return {
-      data: structuredClone(this.#tarefas),
+      data: this.#tarefas,
     };
   }
 
@@ -77,7 +77,7 @@ class TarefaModel {
 
     if (!tarefa) return { erro: `Tarefa com ID #${id} não encontrada` };
 
-    return { data: structuredClone(tarefa) };
+    return { data: tarefa };
   }
 
   editar(id, payload) {

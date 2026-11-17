@@ -41,14 +41,23 @@
         <% if (tarefas.length === 0) { %>
             <p>Nenhuma tarefa cadastrado</p>
         <% } else { %>
+            <p style="display:grid;gap:8px;grid-template-columns:repeat(5,1fr);grid-template-rows:auto;">
+                <strong>ID</strong>
+                <strong>Título</strong>
+                <strong>Disciplina</strong>
+                <strong>Estado</strong>
+                <strong>Ações</strong>
+            </p>
+            
             <% tarefas.forEach(tarefa => { %>
-                <p style="display:grid;gap:8px;grid-template-columns:repeat(5,1fr);grid-template-rows:auto;">
+                <p style="display:grid;gap:8px;grid-template-columns:repeat(6,1fr);grid-template-rows:auto;">
                     <span>#<%= tarefa.id %></span>
                     <span><%= tarefa.titulo %></span>
-                    <span><%= tarefa.descricao %></span>
+                    <span><%= tarefa.disciplina %></span>
                     <span style="text-transform:uppercase;"><%= tarefa.status %></span>
                     <span style="display:flex;gap:8px">
                         <a href="/tarefas/detalhes/<%= tarefa.id %>" target="_blank" rel="noreferrer noopener">Detalhes</a>
+                        <a href="/tarefas/editar/<%= tarefa.id %>" target="_blank" rel="noreferrer noopener">Editar</a>
                         <a href="/tarefas/concluir/<%= tarefa.id %>" target="_blank" rel="noreferrer noopener">Concluir</a>
                         <a href="/tarefas/excluir/<%= tarefa.id %>" target="_blank" rel="noreferrer noopener">Excluir</a>
                     </span>

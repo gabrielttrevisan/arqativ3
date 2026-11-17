@@ -10,6 +10,8 @@ class TarefaController {
     this.detalhes = this.detalhes.bind(this);
     this.concluir = this.concluir.bind(this);
     this.excluir = this.excluir.bind(this);
+    this.editarPost = this.editarPost.bind(this);
+    this.editarView = this.editarView.bind(this);
   }
 
   cadastrar(req, res) {
@@ -106,6 +108,52 @@ class TarefaController {
     res.render("tarefas/index", {
       tarefas: respostaListar.data || [],
       erro: resposta.erro || `Sucesso! Tarefa #${id} excluída com sucesso`,
+    });
+  }
+
+  editarPost(req, res) {
+    const { id, ...rest } = req.body ?? {};
+
+    const numId = Number(id);
+
+    if (!numId || isNaN(numId) || !isFinite(numId)) {
+      const respostaListar = this.#model.listar();
+
+      return res.status(400).render("tarefas/index", {
+        tarefas: respostaListar.data ?? [],
+        erro: `Erro: identificador inválido`,
+      });
+    }
+
+    const resultado = this.#model.editar(numId, rest);
+
+    if (resultado.erro) {
+      const resposta = this.#model.listar();
+
+      return res.status(400).render("tarefas/index", {
+        tarefas: resposta.data ?? [],
+        erro: resultado.erro,
+      });
+    }
+
+    return res.redirect(303, "/tarefas");
+  }
+
+  editarView(req, res) {
+    const id = Number(req.params?.id);
+
+    if (!id || isNaN(id) || !isFinite(id)) {
+      return res.render("tarefas/detalhes", {
+        tarefa: null,
+        erro: `Nenhum tarefa encontrada para o ID "${id}"`,
+      });
+    }
+
+    const resposta = this.#model.porId(id);
+
+    res.render("tarefas/editar", {
+      tarefa: resposta.data || {},
+      erro: resposta.erro,
     });
   }
 }
