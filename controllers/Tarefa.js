@@ -9,6 +9,7 @@ class TarefaController {
     this.filtrar = this.filtrar.bind(this);
     this.detalhes = this.detalhes.bind(this);
     this.concluir = this.concluir.bind(this);
+    this.excluir = this.excluir.bind(this);
   }
 
   cadastrar(req, res) {
@@ -84,6 +85,27 @@ class TarefaController {
     res.render("tarefas/index", {
       tarefas: respostaListar.data || [],
       erro: resposta.erro || `Sucesso! Tarefa #${id} concluida com sucesso`,
+    });
+  }
+
+  excluir(req, res) {
+    const id = Number(req.params?.id);
+
+    if (!id || isNaN(id) || !isFinite(id)) {
+      const respostaListar = this.#model.listar();
+
+      return res.status(400).render("tarefas/index", {
+        tarefas: respostaListar.data ?? [],
+        erro: `Erro: identificador inválido`,
+      });
+    }
+
+    const resposta = this.#model.excluir(id);
+    const respostaListar = this.#model.listar();
+
+    res.render("tarefas/index", {
+      tarefas: respostaListar.data || [],
+      erro: resposta.erro || `Sucesso! Tarefa #${id} excluída com sucesso`,
     });
   }
 }
